@@ -4,7 +4,6 @@
 #define QUANTUM_UNITS 2
 
 
-
 struct node {
     char nombre;
     int num;
@@ -37,8 +36,11 @@ void crearLista(int n)
     int i, num;
     char nombre;
     struct node *preptr, *newnode;
-    //arreglo
-
+    int arreglo[10]= {0};
+    int a,b;
+    int loop;
+    int mayor;
+    int posMayor =0;
     if(n >= 1)
     {
         stnode = (struct node *)malloc(sizeof(struct node));
@@ -53,8 +55,11 @@ void crearLista(int n)
         stnode->nextptr = NULL;
         preptr = stnode;
 
-        // aqui
-        
+        a = num;
+        arreglo[0]=num;
+        //for(loop = 0; loop < 10; loop++)
+         //printf("%d ", arreglo[loop]);
+
         for(i=2; i<=n; i++)
         {
             newnode = (struct node *)malloc(sizeof(struct node));
@@ -64,11 +69,12 @@ void crearLista(int n)
             printf("Unidades del proceso: ");
             scanf("%d", &num);
 
-
-
-
-            //aqui
-
+            b = num;
+            arreglo[i-1]=num;
+            
+            //for(loop = 0; loop < 10; loop++)
+            //printf("%d ", arreglo[loop]);
+         
             newnode->nombre = nombre;
             newnode->num = num;
             newnode->nextptr = NULL;	// A la siguiente direccion del nuevo nodo se le coloca NULL
@@ -80,9 +86,18 @@ void crearLista(int n)
         }
         preptr->nextptr = stnode; 		//El ultimo nodo se linkea con el primer nodo
     }
-  //Buscas el elemento mayor
-  // x = elemento mayor
-  // return x
+    mayor = arreglo[0];
+    for(int i = 1; i < n; ++i)
+    {
+        if(arreglo[i] > mayor)
+        {
+            mayor = arreglo[i];
+            posMayor = i;
+        }
+    }
+    printf("El numero mayor fue: %d (indice: %d)\n", mayor, posMayor);
+    
+
 
 
 }
