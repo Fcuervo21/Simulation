@@ -3,6 +3,8 @@
 
 #define QUANTUM_UNITS 2
 
+
+
 struct node {
     char nombre;
     int num;
@@ -10,72 +12,91 @@ struct node {
 }*stnode;
  
 // Prototipo de funciones
-void ClListcreation(int n);
-void displayClList();
-
+void crearLista(int n);
+void mostrarLista();
+// -------------------------------------------------
 int main()
 {
   int n;
   stnode = NULL;
-	printf("\n\n Circular Linked List :\n");
-	printf("-----------------------------------------------------------------------\n");	   	
+	printf("\n\n Lista Circular Ligada :\n");
+	printf("----------------------------------------\n");
 
     printf("Ingresa la cantidad de nodos : ");
     scanf("%d", &n);
- 
-    ClListcreation(n); 
-    displayClList();
+
+    crearLista(n); 
+    mostrarLista();
     return 0;
 }
+// -----------------------------------------------------
 
-void ClListcreation(int n)
+//---------------------------------------------------------
+void crearLista(int n)
 {
     int i, num;
     char nombre;
     struct node *preptr, *newnode;
+    //arreglo
 
     if(n >= 1)
     {
         stnode = (struct node *)malloc(sizeof(struct node));
         printf("\nIngresa la letra del proceso : ");
-        scanf("%c", &nombre);
-        printf("\nIngresa las unidades del proceso 1 : ");
+        scanf(" %c", &nombre);
+        printf("Ingresa las unidades del proceso 1 : ");
         scanf("%d", &num);
 
         stnode -> nombre = nombre;
-        stnode->num = num;
+        stnode-> num = num;
 
         stnode->nextptr = NULL;
         preptr = stnode;
+
+        // aqui
         
         for(i=2; i<=n; i++)
         {
             newnode = (struct node *)malloc(sizeof(struct node));
             printf("\nIngresar informacion del nodo %d : ", i);
             printf("\nLetra del proceso: ");
-            scanf("%c", &nombre);
-            printf("\nUnidades del proceso: ");
+            scanf(" %c", &nombre);
+            printf("Unidades del proceso: ");
             scanf("%d", &num);
+
+
+
+
+            //aqui
 
             newnode->nombre = nombre;
             newnode->num = num;
-            newnode->nextptr = NULL;	// next address of new node set as NULL
+            newnode->nextptr = NULL;	// A la siguiente direccion del nuevo nodo se le coloca NULL
 
-            preptr->nextptr = newnode;	// previous node is linking with new node
-            preptr = newnode;   		// previous node is advanced
+            preptr->nextptr = newnode;	//El nodo anterior se linkea con el nuevo nodo
+            preptr = newnode;   		// El nodo anterior avanza
+
+
         }
-        preptr->nextptr = stnode; 		//last node is linking with first node
+        preptr->nextptr = stnode; 		//El ultimo nodo se linkea con el primer nodo
     }
-}
+  //Buscas el elemento mayor
+  // x = elemento mayor
+  // return x
 
-void displayClList()
+
+}
+// ------------------------------------------------------
+
+// ------------------------------------------------------
+void mostrarLista()
 {
     struct node *tmp;
     int n = 1;
 
     if(stnode == NULL)
     {
-        printf(" No data found in the List yet.");
+        printf("No hay informacion");
     }
     else
     {
@@ -90,3 +111,4 @@ void displayClList()
         }while(tmp != stnode);
     }
 }
+// ------------------------------------------------------------
