@@ -11,27 +11,29 @@ struct node {
 }*stnode;
  
 // Prototipo de funciones
-void crearLista(int n);
-void mostrarLista();
+int crearLista(int n);
+void mostrarLista(int x);
+void cursorAyuda();
 // -------------------------------------------------
 int main()
 {
-  int n;
+  int n, x;
   stnode = NULL;
-	printf("\n\n Lista Circular Ligada :\n");
-	printf("----------------------------------------\n");
+	printf("\n\n Simulacion Round Robin :\n");
+	printf("--------------------------\n");
 
     printf("Ingresa la cantidad de nodos : ");
     scanf("%d", &n);
 
-    crearLista(n); 
-    mostrarLista();
+    x = crearLista(n); 
+    //cursorAyuda();
+    mostrarLista(x);
     return 0;
 }
 // -----------------------------------------------------
 
 //---------------------------------------------------------
-void crearLista(int n)
+int crearLista(int n)
 {
     int i, num;
     char nombre;
@@ -41,6 +43,7 @@ void crearLista(int n)
     int loop;
     int mayor;
     int posMayor =0;
+
     if(n >= 1)
     {
         stnode = (struct node *)malloc(sizeof(struct node));
@@ -57,8 +60,7 @@ void crearLista(int n)
 
         a = num;
         arreglo[0]=num;
-        //for(loop = 0; loop < 10; loop++)
-         //printf("%d ", arreglo[loop]);
+
 
         for(i=2; i<=n; i++)
         {
@@ -72,8 +74,6 @@ void crearLista(int n)
             b = num;
             arreglo[i-1]=num;
             
-            //for(loop = 0; loop < 10; loop++)
-            //printf("%d ", arreglo[loop]);
          
             newnode->nombre = nombre;
             newnode->num = num;
@@ -86,6 +86,7 @@ void crearLista(int n)
         }
         preptr->nextptr = stnode; 		//El ultimo nodo se linkea con el primer nodo
     }
+    //Se selecciona el elemento mayor 
     mayor = arreglo[0];
     for(int i = 1; i < n; ++i)
     {
@@ -95,8 +96,8 @@ void crearLista(int n)
             posMayor = i;
         }
     }
-    printf("El numero mayor fue: %d (indice: %d)\n", mayor, posMayor);
-    
+
+    return mayor;
 
 
 
@@ -104,10 +105,12 @@ void crearLista(int n)
 // ------------------------------------------------------
 
 // ------------------------------------------------------
-void mostrarLista()
+void mostrarLista(int x)
 {
-    struct node *tmp;
-    int n = 1;
+    //struct node *tmp;
+    int n = 1, i, a;
+
+    int num_giros = x / QUANTUM_UNITS;
 
     if(stnode == NULL)
     {
@@ -115,15 +118,32 @@ void mostrarLista()
     }
     else
     {
-        tmp = stnode;
-        printf("\nValores ingresados son :\n");
+        printf("\nRound Robin:\n");
+        for(i = 1; i<= num_giros; i++){
+          printf("\nGiro numero %d\n", i);
+          cursorAyuda();
+          printf("\n");
+          
 
-        do {
-            printf("Informacion nodo %d = %c %d\n", n, tmp->nombre, tmp->num);
+        }
+    }
+}
+// ------------------------------------------------------------
+
+void cursorAyuda(){
+  struct node *tmp;
+  int n =1, x;
+  tmp = stnode;
+  do {
+            x = tmp->num;
+            tmp -> num = tmp -> num - QUANTUM_UNITS;
+            if(tmp->num >= 0){
+              
+              printf("\nProceso %c = Numero de procesos inicial: %d || Numero de procesos despues del giro : %d", tmp->nombre, x, tmp->num);
+              
+            }
 
             tmp = tmp->nextptr;
             n++;
         }while(tmp != stnode);
-    }
 }
-// ------------------------------------------------------------
